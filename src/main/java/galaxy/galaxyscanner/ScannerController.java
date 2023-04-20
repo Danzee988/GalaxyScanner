@@ -11,7 +11,6 @@ import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,10 +73,10 @@ public class ScannerController {
 
     public void Chooser() throws IOException {
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        File file = fileChooser.showOpenDialog(null);
-//        File file = new File("C:\\Users\\danze\\Desktop\\1.jpg");
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setTitle("Open Resource File");
+//        File file = fileChooser.showOpenDialog(null);
+        File file = new File("C:\\Users\\danze\\Desktop\\1.jpg");
 
         Image image1 = new Image(String.valueOf(file));
         image.setImage(image1);
@@ -107,7 +106,7 @@ public class ScannerController {
     public void blackAndWhite() throws IOException {
         Merging merging = new Merging();
         String minSize = minSelection.getText();
-        merging.segmentImage(defaultImage,scanndedImage,imageWithCircle,image, Integer.parseInt(minSize),starDetails,slider.getValue(),0);
+        merging.segmentImage(defaultImage,scanndedImage,imageWithCircle,image, Integer.parseInt(minSize),slider.getValue(),0,0);
         merging.countSpotsText(totalStars, Integer.parseInt(minSize));
         merging.createDetailTree(starDetails,Integer.parseInt(minSize),false);
     }
@@ -127,19 +126,22 @@ public class ScannerController {
         Merging merging = new Merging();
         String minSize = minSelection.getText();
         String star = starNumber.getText();
-        merging.segmentImage(defaultImage,scanndedImage,imageWithCircle,image, Integer.parseInt(minSize),starDetails,slider.getValue(),3);
+        if (star.equals("")){
+            star = "0";
+        }
+        merging.segmentImage(defaultImage,scanndedImage,imageWithCircle,image, Integer.parseInt(minSize),slider.getValue(),3,Integer.parseInt(star));
     }
 
     @FXML
     public void multiChange() throws IOException {
         Merging merging = new Merging();
         String minSize = minSelection.getText();
-        merging.segmentImage(defaultImage,scanndedImage,imageWithCircle,image, Integer.parseInt(minSize),starDetails,slider.getValue(),2);
+        merging.segmentImage(defaultImage,scanndedImage,imageWithCircle,image, Integer.parseInt(minSize),slider.getValue(),2,0);
     }
     public void highlight() throws IOException {
         Merging merging = new Merging();
         String minSize = minSelection.getText();
-        merging.segmentImage(defaultImage,scanndedImage,imageWithCircle,image, Integer.parseInt(minSize),starDetails,slider.getValue(),1);
+        merging.segmentImage(defaultImage,scanndedImage,imageWithCircle,image, Integer.parseInt(minSize),slider.getValue(),1,0);
 
     }
 

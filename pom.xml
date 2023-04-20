@@ -48,6 +48,7 @@
             <artifactId>junit-dep</artifactId>
             <version>4.11</version>
         </dependency>
+
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>

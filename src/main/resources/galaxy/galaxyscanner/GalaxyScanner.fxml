@@ -89,6 +89,8 @@
                   <Button layoutX="547.0" layoutY="469.0" mnemonicParsing="false" onAction="#singleStarChange" stylesheets="@style.css" text="Single Star Color" />
                   <TextField fx:id="starNumber" layoutX="426.0" layoutY="469.0" prefHeight="25.0" prefWidth="96.0" promptText="Star to Change" />
                   <Text fill="WHITE" layoutX="425.0" layoutY="458.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the star you want to change color" />
+                  <Text fill="WHITE" layoutX="36.0" layoutY="526.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Celestial Stars in image :" />
+                  <TextField fx:id="totalStars" layoutX="239.0" layoutY="509.0" prefHeight="25.0" prefWidth="55.0" />
                </children>
             </Pane>
             <Pane fx:id="pnlProcess" prefHeight="200.0" prefWidth="200.0" visible="false">
@@ -96,12 +98,10 @@
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="47.0" layoutY="72.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
                   <ImageView fx:id="imageWithCircle" fitHeight="280.0" fitWidth="280.0" layoutX="57.0" layoutY="82.0" pickOnBounds="true" />
                   <TreeView fx:id="starDetails" layoutX="435.0" layoutY="72.0" minHeight="300.0" minWidth="300.0" prefHeight="251.0" prefWidth="241.0" />
-                  <Text fill="WHITE" layoutX="46.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Celestial Stars in image" />
-                  <TextField fx:id="totalStars" layoutX="46.0" layoutY="420.0" prefHeight="25.0" prefWidth="55.0" />
                   <Text fill="WHITE" layoutX="435.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Search" />
                   <TextField fx:id="findStar" layoutX="435.0" layoutY="420.0" prefHeight="25.0" prefWidth="113.0" promptText="Star Number" />
                   <Button layoutX="568.0" layoutY="420.0" mnemonicParsing="false" onAction="#selectStar" stylesheets="@style.css" text="Search" />
-                  <Button layoutX="138.0" layoutY="420.0" mnemonicParsing="false" onAction="#expandTree" stylesheets="@style.css" text="Expand Tree" />
+                  <Button layoutX="435.0" layoutY="462.0" mnemonicParsing="false" onAction="#expandTree" stylesheets="@style.css" text="Expand Tree" />
                </children>
             </Pane>
          </children>

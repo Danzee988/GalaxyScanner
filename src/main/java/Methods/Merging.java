@@ -29,7 +29,7 @@ public class Merging {
 
     public int yArray[]; // Array to store the y values of each pixel (used for union-find)
 
-    public void segmentImage(Image defaultImage, ImageView mainImage, ImageView blackWhiteImage , ImageView treeImage, int minSize, TreeView<String> treeView, double threshold, int changeNow) {
+    public void segmentImage(Image defaultImage, ImageView mainImage, ImageView blackWhiteImage , ImageView treeImage, int minSize, double threshold, int changeNow, int starNumber) {
         // Get the height and width of the image
         int height = (int) defaultImage.getHeight();
         int width = (int) defaultImage.getWidth();
@@ -110,7 +110,7 @@ public class Merging {
             differentColorStars(pixelArray,minSize,labelWriter,xArray,yArray);
         }
         if (changeNow == 3){
-            oneStarChange(pixelArray,minSize,labelWriter,xArray,yArray);
+            oneStarChange(pixelArray,minSize,labelWriter,xArray,yArray,starNumber);
         }
 
         //--------------------------------------------------------------
@@ -259,35 +259,60 @@ public class Merging {
         }
     }
 
-    public static void oneStarChange(int[] pixelArray, int minSize, PixelWriter pixelWriter, int [] xArray, int [] yArray) {
+    public static void oneStarChange(int[] pixelArray, int minSize, PixelWriter pixelWriter, int [] xArray, int [] yArray,int starNumber) {
         // Create the spot map and XY map
         HashMap<String, HashMap<Integer, List<Integer>>> spotMap = createStarMap(pixelArray);
-        HashMap<String, HashMap<Integer, List<Integer>>> xyMap = createXYMap(xArray, yArray,pixelArray);
+        HashMap<String, HashMap<Integer, List<Integer>>> xyMap = createXYMap(xArray, yArray, pixelArray);
 
         // Get a list of stars with sizes greater than or equal to minSize
         List<Integer> largeStars = new ArrayList<>();
+        List<Map.Entry<Integer, Integer>> sortedSpotList = sortSpotsBySize(minSize);
+
         for (int root : spotMap.get("valueMap").keySet()) {
             if (spotMap.get("valueMap").get(root).size() > minSize) {
                 largeStars.add(root);
             }
         }
 
+        // Generate a random color
+        Color randomColor = Color.rgb((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+
         // Choose a random star from the list of large stars
-        if (!largeStars.isEmpty()) {
-            int randomRoot = largeStars.get((int)(Math.random() * largeStars.size()));
+        if (!sortedSpotList.isEmpty()) {
+            if (starNumber == 0) {
+                int randomRoot = largeStars.get((int) (Math.random() * largeStars.size()));
 
-            // Generate a random color
-            Color randomColor = Color.rgb((int)(Math.random() * 256), (int)(Math.random() * 256), (int)(Math.random() * 256));
+                List<Integer> xRandom = xyMap.get("xMap").get(randomRoot);
+                List<Integer> yRandom = xyMap.get("yMap").get(randomRoot);
 
-            // Get the x and y coordinates for the pixels in the star
-            List<Integer> xCoords = xyMap.get("xMap").get(randomRoot);
-            List<Integer> yCoords = xyMap.get("yMap").get(randomRoot);
+                for (int i = 0; i < xRandom.size(); i++) {
+                    int x = xRandom.get(i);
+                    int y = yRandom.get(i);
+                    pixelWriter.setColor(x, y, randomColor);
+                }
+            }
 
             // Set the color of each pixel in the star to the random color
-            for (int i = 0; i < xCoords.size(); i++) {
-                int x = xCoords.get(i);
-                int y = yCoords.get(i);
-                pixelWriter.setColor(x, y, randomColor);
+            else {
+                int index = 0;
+                int root = sortedSpotList.get(starNumber - 1).getKey();
+
+                // Get the x and y coordinates for the pixels in the star
+                List<Integer> xSorted = xyMap.get("xMap").get(root);
+                List<Integer> ySorted = xyMap.get("yMap").get(root);
+
+                for (Map.Entry<Integer, Integer> entry : sortedSpotList) {
+                    index++;
+                    if (starNumber == index) {
+                        System.out.println("index: " + index);
+                        for (int i = 0; i < xSorted.size(); i++) {
+                            int x = xSorted.get(i);
+                            int y = ySorted.get(i);
+                            pixelWriter.setColor(x, y, randomColor);
+                        }
+                    }
+                }
+
             }
         }
     }
